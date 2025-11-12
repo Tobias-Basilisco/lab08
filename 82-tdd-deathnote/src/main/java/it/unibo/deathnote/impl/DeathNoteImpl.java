@@ -9,7 +9,8 @@ import it.unibo.deathnote.api.DeathNote;
 public class DeathNoteImpl implements DeathNote{
     private final Map<String, DeathInfo> notes = new LinkedHashMap<>();
     private static final long CauseMilisecondsMargin = 40; 
-    private static final long DetailsMilisecondsMargin = 6_040; 
+    private static final long DetailsMilisecondsMargin = 6_040;
+    private static final String DEFAULT_DEATH_CAUSE = "Heart Attack"; 
 
 
     /**
@@ -66,7 +67,14 @@ public class DeathNoteImpl implements DeathNote{
      * {@inheritDoc}
      */
     public String getDeathCause(String name){
-        return null;
+        if (!isNameWritten(name)){
+            throw new IllegalArgumentException("The name parsed is not written on the DeathNote: " + name);
+        }
+
+        DeathInfo info = notes.get(name);
+        return (info.getCause() != null && !info.getCause().isEmpty())
+                ? info.getCause()
+                : DeathNoteImpl.DEFAULT_DEATH_CAUSE;
     }
 
     /**
