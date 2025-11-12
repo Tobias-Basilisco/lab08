@@ -8,6 +8,8 @@ import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
     private final Map<String, DeathInfo> notes = new HashMap<>();
+    private static final long CauseMilisecondsMargin = 40; 
+    private static final long DetailsMilisecondsMargin = 6_040; 
 
 
     /**
@@ -69,21 +71,23 @@ public class DeathNoteImpl implements DeathNote{
 
         private String cause;
         private String details;
-        private long timeWritten;
+        private long nameTime;
+        private long causeTime;
 
         public DeathInfo(){
-            this.timeWritten = System.currentTimeMillis();
+            this.nameTime = System.currentTimeMillis();
         }
 
-        public DeathInfo(final String cause){
-            this();
-            this.cause = Objects.requireNonNull(cause);
-        }
+        // public DeathInfo(final String cause){
+        //     this();
+        //     this.cause = Objects.requireNonNull(cause);
+        // }
 
-        public DeathInfo(final String cause, final String details){
-            this(cause);
-            this.details = Objects.requireNonNull(details);
-        }
+        // public DeathInfo(final String cause, final String details){
+        //     this(cause);
+        //     this.causeTime = System.currentTimeMillis();
+        //     this.details = Objects.requireNonNull(details);
+        // }
 
         public String getCause() {
             return cause;
@@ -94,16 +98,42 @@ public class DeathNoteImpl implements DeathNote{
         }
 
         public long getTimeWritten() {
-            return timeWritten;
-        }
-        
-        public void setCause(String cause) {
-            this.cause = Objects.requireNonNull(cause);
+            return nameTime;
         }
 
-        public void setDetails(String details) {
-            this.details = Objects.requireNonNull(details);
+        public boolean setCause(String cause, long time) {
+            if (canSetCause(time)){
+                this.cause = Objects.requireNonNull(cause);
+                this.causeTime = System.currentTimeMillis();
+                return true;
+            } else {
+                return false;
+            }
         }
 
+        public boolean setDetails(String details, long time) {
+            if (canSetDetails(time)){
+                this.details = Objects.requireNonNull(details);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private boolean canSetCause(final long time){
+            if ( CauseMilisecondsMargin >= (time - nameTime)){
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private boolean canSetDetails(final long time){
+            if ( DetailsMilisecondsMargin >= (time - causeTime)){
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }
