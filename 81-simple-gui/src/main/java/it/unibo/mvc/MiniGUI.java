@@ -49,7 +49,10 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                System.out.println(randomGenerator.nextInt());
+                int randInt = randomGenerator.nextInt();
+                String output = Integer.toString(randInt);
+                System.out.println(output);
+                textField.setText(output);
             }
         });
     }
