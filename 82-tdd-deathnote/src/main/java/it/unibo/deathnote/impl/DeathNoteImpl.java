@@ -1,5 +1,7 @@
 package it.unibo.deathnote.impl;
 
+import java.util.Objects;
+
 import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
@@ -53,5 +55,36 @@ public class DeathNoteImpl implements DeathNote{
      */
     public boolean isNameWritten(String name){
         return false;
+    }
+
+    private class DeathInfo {
+
+        private String cause;
+        private String details;
+
+        public DeathInfo(final String cause){
+            this.cause = Objects.requireNonNull(cause);
+        }
+
+        public DeathInfo(final String cause, final String details){
+            this(cause);
+            this.details = Objects.requireNonNull(details);
+        }
+
+        public String getCause() {
+            return cause;
+        }
+
+        public String getDetails() {
+            return details;
+        }
+
+        public void setCause(String cause) {
+            this.cause = Objects.requireNonNull(cause);
+        }
+
+        public void setDetails(String details) {
+            this.details = Objects.requireNonNull(details);
+        }
     }
 }
