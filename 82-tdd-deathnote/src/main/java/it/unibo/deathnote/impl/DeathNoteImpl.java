@@ -1,13 +1,13 @@
 package it.unibo.deathnote.impl;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
-    private final Map<String, DeathInfo> notes = new HashMap<>();
+    private final Map<String, DeathInfo> notes = new LinkedHashMap<>();
     private static final long CauseMilisecondsMargin = 40; 
     private static final long DetailsMilisecondsMargin = 6_040; 
 
@@ -36,7 +36,15 @@ public class DeathNoteImpl implements DeathNote{
      * {@inheritDoc}
      */
     public boolean writeDeathCause(String cause){
-        return false;
+        if (notes.isEmpty()){
+            throw new IllegalStateException("No name written on the DeathNote yet");
+        }
+        if (cause == null){
+            throw new IllegalStateException("Null cause parsed");
+        }
+        String name = getLastNameEntered();
+        
+        return notes.get(name).setCause(cause, System.currentTimeMillis());
     }
 
     /**
@@ -65,6 +73,18 @@ public class DeathNoteImpl implements DeathNote{
      */
     public boolean isNameWritten(String name){
         return false;
+    }
+
+    
+    private String getLastNameEntered() {
+        if (notes.isEmpty()){
+            throw new IllegalStateException("No name written on the DeathNote yet");
+        }
+        String last = null;
+        for (String key : notes.keySet()) {
+            last = key;
+        }
+        return Objects.requireNonNull(last);
     }
 
     private class DeathInfo {
