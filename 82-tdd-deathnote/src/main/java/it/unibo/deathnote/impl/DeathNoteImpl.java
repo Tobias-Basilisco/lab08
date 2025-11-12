@@ -69,11 +69,14 @@ public class DeathNoteImpl implements DeathNote{
 
         private String cause;
         private String details;
+        private long timeWritten;
 
         public DeathInfo(){
+            this.timeWritten = System.currentTimeMillis();
         }
 
         public DeathInfo(final String cause){
+            this();
             this.cause = Objects.requireNonNull(cause);
         }
 
@@ -90,6 +93,10 @@ public class DeathNoteImpl implements DeathNote{
             return details;
         }
 
+        public long getTimeWritten() {
+            return timeWritten;
+        }
+        
         public void setCause(String cause) {
             this.cause = Objects.requireNonNull(cause);
         }
@@ -97,5 +104,6 @@ public class DeathNoteImpl implements DeathNote{
         public void setDetails(String details) {
             this.details = Objects.requireNonNull(details);
         }
+
     }
 }
