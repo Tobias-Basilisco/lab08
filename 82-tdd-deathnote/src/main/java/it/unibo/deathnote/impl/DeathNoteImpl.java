@@ -43,7 +43,7 @@ public class DeathNoteImpl implements DeathNote{
             throw new IllegalStateException("Null cause parsed");
         }
         String name = getLastNameEntered();
-        
+
         return notes.get(name).setCause(cause, System.currentTimeMillis());
     }
 
@@ -51,7 +51,15 @@ public class DeathNoteImpl implements DeathNote{
      * {@inheritDoc}
      */
     public boolean writeDetails(String details){
-        return false;
+        if (notes.isEmpty()){
+            throw new IllegalStateException("No name written on the DeathNote yet");
+        }
+        if (details == null){
+            throw new IllegalStateException("Null details parsed");
+        }
+        String name = getLastNameEntered();
+        
+        return notes.get(name).setDetails(details, System.currentTimeMillis());
     }
 
     /**
