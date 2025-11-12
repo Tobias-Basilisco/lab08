@@ -1,10 +1,14 @@
 package it.unibo.deathnote.impl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
+    private final Map<String, DeathInfo> notes = new HashMap<>();
+
 
     /**
      * {@inheritDoc}
@@ -19,7 +23,11 @@ public class DeathNoteImpl implements DeathNote{
     /**
      * {@inheritDoc}
      */
-    public void writeName(String name){        
+    public void writeName(String name){ 
+        if (name == null){
+            throw new NullPointerException("No name has been passed");
+        }
+        notes.put(name, new DeathInfo());  
     }
 
     /**
@@ -61,6 +69,9 @@ public class DeathNoteImpl implements DeathNote{
 
         private String cause;
         private String details;
+
+        public DeathInfo(){
+        }
 
         public DeathInfo(final String cause){
             this.cause = Objects.requireNonNull(cause);
