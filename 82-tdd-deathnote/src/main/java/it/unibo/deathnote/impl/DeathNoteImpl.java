@@ -70,9 +70,9 @@ public class DeathNoteImpl implements DeathNote{
         if (!isNameWritten(name)){
             throw new IllegalArgumentException("The name parsed is not written on the DeathNote: " + name);
         }
-
         DeathInfo info = notes.get(name);
-        return (info.getCause() != null && !info.getCause().isEmpty())
+
+        return (!info.getDetails().isEmpty())
                 ? info.getCause()
                 : DeathNoteImpl.DEFAULT_DEATH_CAUSE;
     }
@@ -81,7 +81,12 @@ public class DeathNoteImpl implements DeathNote{
      * {@inheritDoc}
      */
     public String getDeathDetails(String name){
-        return null;
+        if (!isNameWritten(name)){
+            throw new IllegalArgumentException("The name parsed is not written on the DeathNote: " + name);
+        }
+        DeathInfo info = notes.get(name);
+
+        return info.getDetails();
     }
 
     /**
