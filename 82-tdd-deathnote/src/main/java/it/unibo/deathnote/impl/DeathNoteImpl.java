@@ -97,8 +97,12 @@ public class DeathNoteImpl implements DeathNote{
             return details;
         }
 
-        public long getTimeWritten() {
+        public long getNameTime() {
             return nameTime;
+        }
+
+        public long getCauseTime() {
+            return causeTime;
         }
 
         public boolean setCause(String cause, long time) {
@@ -121,7 +125,7 @@ public class DeathNoteImpl implements DeathNote{
         }
 
         private boolean canSetCause(final long time){
-            if ( CauseMilisecondsMargin >= (time - nameTime)){
+            if ( CauseMilisecondsMargin >= (time - getNameTime())){
                 return true;
             } else {
                 return false;
@@ -129,7 +133,7 @@ public class DeathNoteImpl implements DeathNote{
         }
 
         private boolean canSetDetails(final long time){
-            if ( DetailsMilisecondsMargin >= (time - causeTime)){
+            if ( DetailsMilisecondsMargin >= (time - getCauseTime())){
                 return true;
             } else {
                 return false;
