@@ -80,6 +80,14 @@ public class DeathNoteImpl implements DeathNote{
      * {@inheritDoc}
      */
     public boolean isNameWritten(String name){
+        if (notes.isEmpty()){
+            return false;
+        }
+        for (final String n : notes.keySet()){
+            if (n.equals(name)){
+                return true;
+            }
+        }
         return false;
     }
 
