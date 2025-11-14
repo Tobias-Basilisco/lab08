@@ -8,9 +8,10 @@ import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
     private final Map<String, DeathInfo> notes = new LinkedHashMap<>();
+    private String lastNameWritten;
     private static final long CauseMilisecondsMargin = 40; 
     private static final long DetailsMilisecondsMargin = 6_040;
-    private static final String DEFAULT_DEATH_CAUSE = "Heart Attack"; 
+    private static final String DEFAULT_DEATH_CAUSE = "Heart Attack";
 
 
     /**
@@ -30,7 +31,8 @@ public class DeathNoteImpl implements DeathNote{
         if (name == null){
             throw new NullPointerException("No name has been passed");
         }
-        notes.put(name, new DeathInfo());  
+        notes.put(name, new DeathInfo());
+        lastNameWritten = name;  
     }
 
     /**
@@ -43,7 +45,7 @@ public class DeathNoteImpl implements DeathNote{
         if (cause == null){
             throw new IllegalStateException("Null cause parsed");
         }
-        String name = getLastNameEntered();
+        String name = getlastNameWritten();
 
         return notes.get(name).setCause(cause, System.currentTimeMillis());
     }
@@ -58,7 +60,7 @@ public class DeathNoteImpl implements DeathNote{
         if (details == null){
             throw new IllegalStateException("Null details parsed");
         }
-        String name = getLastNameEntered();
+        String name = getlastNameWritten();
         
         return notes.get(name).setDetails(details, System.currentTimeMillis());
     }
@@ -105,15 +107,11 @@ public class DeathNoteImpl implements DeathNote{
     }
 
     
-    private String getLastNameEntered() {
+    private String getlastNameWritten() {
         if (notes.isEmpty()){
             throw new IllegalStateException("No name written on the DeathNote yet");
         }
-        String last = null;
-        for (String key : notes.keySet()) {
-            last = key;
-        }
-        return Objects.requireNonNull(last);
+        return Objects.requireNonNull(lastNameWritten);
     }
 
     private class DeathInfo {
