@@ -14,10 +14,13 @@ import it.unibo.deathnote.impl.DeathNoteImpl;
 
 class TestDeathNote {
 
-    private static final int ACCEPTABLE_MESSAGE_LENGTH = 10;
+    private final int ACCEPTABLE_MESSAGE_LENGTH = 10;
     private final int NEGATIVE_VALUE = -5;
-    private static final String HUMAN_NAME = "Humanoid Johnson";
-    private static final String HUMAN_2_NAME = "Hum Anoid";
+    private final String HUMAN_NAME = "Humanoid Johnson";
+    private final String HUMAN_2_NAME = "Hum Anoid";
+    private final String CAUSE_OF_DEATH = "karting accident";
+    private final String GET_RULE_EXCEPTION = "IllegalArgumentException";
+    private final String WRITE_DEATH_CAUSE_EXCEPTION = "IllegalStateException";
     private DeathNote deathNote;
     private String instruction = null;
 
@@ -39,7 +42,7 @@ class TestDeathNote {
             Assertions.fail("No Exception thrown for value: " + value);
         } catch (Exception e){
             assertEquals(null, instruction);
-            assertEquals("IllegalArgumentException", e.getClass().getSimpleName());
+            assertEquals(GET_RULE_EXCEPTION, e.getClass().getSimpleName());
             assertNotNull(e.getMessage());
             assertFalse(e.getMessage().isBlank());
             assertTrue(e.getMessage().length() >= ACCEPTABLE_MESSAGE_LENGTH);
@@ -76,7 +79,7 @@ class TestDeathNote {
      */
     @Test
     public void testInstructionsForAllValidIndexes(){
-        for (int i = 1; i <= deathNote.RULES.size(); i++){
+        for (int i = 1; i <= DeathNote.RULES.size(); i++){
             testInstructionsInRange(i);
         }
     }
@@ -102,5 +105,32 @@ class TestDeathNote {
         assertFalse(deathNote.isNameWritten(""));
     }
 
-
+    /**
+     * check that writing a cause of death before writing a name throws the correct exception
+     * write the name of a human in the notebook
+     * verify that the cause of death is a heart attack
+     * write the name of another human in the notebook
+     * set the cause of death to "karting accident"
+     * verify that the cause of death has been set correctly (returned true, and the cause is indeed "karting accident")
+     * sleep for 100ms
+     * try to change the cause of death 
+     * verify that the cause of death has not been changed
+    */
+    @Test
+    public void testCauseOfDeath(){
+        try {
+            deathNote.writeDeathCause(CAUSE_OF_DEATH);
+            Assertions.fail("Writing cause of death on an empty deathNote should throw an exception");
+        } catch (Exception e){
+            assertEquals(null, instruction);
+            assertEquals(WRITE_DEATH_CAUSE_EXCEPTION, e.getClass().getSimpleName());
+            assertNotNull(e.getMessage());
+            assertFalse(e.getMessage().isBlank());
+            assertTrue(e.getMessage().length() >= ACCEPTABLE_MESSAGE_LENGTH);
+            deathNote.writeName(HUMAN_NAME);
+            assertEquals(DeathNoteImpl.DEFAULT_DEATH_CAUSE ,deathNote.getDeathCause(HUMAN_NAME));
+            deathNote.writeName(HUMAN_2_NAME);
+            assertTrue(deathNote.writeDeathCause(CAUSE_OF_DEATH));
+        }
+    }
 }

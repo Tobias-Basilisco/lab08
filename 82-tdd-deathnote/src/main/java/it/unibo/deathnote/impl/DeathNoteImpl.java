@@ -11,7 +11,7 @@ public class DeathNoteImpl implements DeathNote{
     private String lastNameWritten = null;
     private static final long CauseMilisecondsMargin = 40; 
     private static final long DetailsMilisecondsMargin = 6_040;
-    private static final String DEFAULT_DEATH_CAUSE = "Heart Attack";
+    static public final String DEFAULT_DEATH_CAUSE = "Heart Attack";
 
 
     /**
@@ -74,9 +74,10 @@ public class DeathNoteImpl implements DeathNote{
         }
         DeathInfo info = notes.get(name);
 
-        return (!info.getDetails().isEmpty())
+        return ( (info != null && info.getCause() != null)
                 ? info.getCause()
-                : DeathNoteImpl.DEFAULT_DEATH_CAUSE;
+                : DeathNoteImpl.DEFAULT_DEATH_CAUSE
+                );
     }
 
     /**
