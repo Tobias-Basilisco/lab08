@@ -126,17 +126,6 @@ public class DeathNoteImpl implements DeathNote{
             this.nameTime = System.currentTimeMillis();
         }
 
-        // public DeathInfo(final String cause){
-        //     this();
-        //     this.cause = Objects.requireNonNull(cause);
-        // }
-
-        // public DeathInfo(final String cause, final String details){
-        //     this(cause);
-        //     this.causeTime = System.currentTimeMillis();
-        //     this.details = Objects.requireNonNull(details);
-        // }
-
         public String getCause() {
             return cause;
         }
