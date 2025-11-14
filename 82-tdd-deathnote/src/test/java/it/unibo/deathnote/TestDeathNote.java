@@ -28,7 +28,7 @@ class TestDeathNote {
     }
 
     /*
-     * helper that tests for different values
+     * helper that tests IllegalArgumentException for values out of range of the instruction list
      */
     private void testInstructionsOutOfRange(final int value){
         try {
@@ -43,13 +43,21 @@ class TestDeathNote {
         }
     }
 
+    /**
+     * Tests negative iindex access to instruction list
+     */
     @Test
     public void testInstructionsForNegativeIndex(){
         testInstructionsOutOfRange(NEGATIVE_VALUE);
     }
 
+    /**
+     * Tests zero iindex access to instruction list
+     */
     @Test
-    public void testInstructionsFoZeroIndex(){
+    public void testInstructionsForZeroIndex(){
         testInstructionsOutOfRange(0);
     }
+
+
 }
