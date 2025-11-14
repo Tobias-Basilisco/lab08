@@ -59,5 +59,21 @@ class TestDeathNote {
         testInstructionsOutOfRange(0);
     }
 
+     /*
+     * helper that tests legal values of the instruction list
+     */
+    private void testInstructionsInRange(final int value){
+        assertNotNull(deathNote.getRule(value));
+        assertFalse(deathNote.getRule(value).isBlank());
+    }
 
+    /**
+     * Tests all valid iindexes access to instruction list
+     */
+    @Test
+    public void testInstructionsForAllValidIndexes(){
+        for (int i = 1; i <= deathNote.RULES.size(); i++){
+            testInstructionsInRange(i);
+        }
+    }
 }
