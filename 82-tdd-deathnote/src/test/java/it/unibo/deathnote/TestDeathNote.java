@@ -16,6 +16,7 @@ class TestDeathNote {
 
     private final int ACCEPTABLE_MESSAGE_LENGTH = 10;
     private final int NEGATIVE_VALUE = -5;
+    private final long SLEEP_MILIS = 100;
     private final String HUMAN_NAME = "Humanoid Johnson";
     private final String HUMAN_2_NAME = "Hum Anoid";
     private final String CAUSE_OF_DEATH = "karting accident";
@@ -131,6 +132,14 @@ class TestDeathNote {
             assertEquals(DeathNoteImpl.DEFAULT_DEATH_CAUSE ,deathNote.getDeathCause(HUMAN_NAME));
             deathNote.writeName(HUMAN_2_NAME);
             assertTrue(deathNote.writeDeathCause(CAUSE_OF_DEATH));
+            assertEquals(CAUSE_OF_DEATH, deathNote.getDeathCause(HUMAN_2_NAME));
+            try {
+                Thread.sleep(SLEEP_MILIS);
+                assertFalse(deathNote.writeDeathCause(DeathNoteImpl.DEFAULT_DEATH_CAUSE));
+                assertEquals(CAUSE_OF_DEATH, deathNote.getDeathCause(HUMAN_2_NAME));
+            } catch (InterruptedException ie){
+                System.out.println(ie.getMessage());
+            }  
         }
     }
 }
