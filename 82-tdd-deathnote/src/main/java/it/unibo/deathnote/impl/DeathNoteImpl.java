@@ -8,7 +8,7 @@ import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
     private final Map<String, DeathInfo> notes = new LinkedHashMap<>();
-    private String lastNameWritten;
+    private String lastNameWritten = null;
     private static final long CauseMilisecondsMargin = 40; 
     private static final long DetailsMilisecondsMargin = 6_040;
     private static final String DEFAULT_DEATH_CAUSE = "Heart Attack";
