@@ -9,8 +9,8 @@ import it.unibo.deathnote.api.DeathNote;
 public class DeathNoteImpl implements DeathNote{
     private final Map<String, DeathInfo> notes = new LinkedHashMap<>();
     private String lastNameWritten = null;
-    private static final long CauseMilisecondsMargin = 40; 
-    private static final long DetailsMilisecondsMargin = 6_040;
+    private static final long CAUSE_MILIS_MARGIN = 40; 
+    private static final long DETAILS_MILIS_MARGIN = 6_040;
     static public final String DEFAULT_DEATH_CAUSE = "Heart Attack";
 
 
@@ -173,7 +173,7 @@ public class DeathNoteImpl implements DeathNote{
         }
 
         private boolean canSetCause(final long time){
-            if ( CauseMilisecondsMargin >= (time - getNameTime())){
+            if ( CAUSE_MILIS_MARGIN >= (time - getNameTime())){
                 return true;
             } else {
                 return false;
@@ -181,7 +181,7 @@ public class DeathNoteImpl implements DeathNote{
         }
 
         private boolean canSetDetails(final long time){
-            if ( DetailsMilisecondsMargin >= (time - getCauseTime())){
+            if ( DETAILS_MILIS_MARGIN >= (time - getCauseTime())){
                 return true;
             } else {
                 return false;
