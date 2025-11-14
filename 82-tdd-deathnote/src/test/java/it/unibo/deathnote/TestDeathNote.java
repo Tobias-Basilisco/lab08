@@ -27,11 +27,13 @@ class TestDeathNote {
         deathNote = new DeathNoteImpl();
     }
 
-    @Test
-    public void testInstructionsIndexRange(){
+    /*
+     * helper that tests for different values
+     */
+    private void testInstructionsOutOfRange(final int value){
         try {
-            instruction = deathNote.getRule(NEGATIVE_VALUE);
-            Assertions.fail("No Exception thrown for negative index");
+            instruction = deathNote.getRule(value);
+            Assertions.fail("No Exception thrown for value: " + value);
         } catch (Exception e){
             assertEquals(null, instruction);
             assertEquals("IllegalArgumentException", e.getClass().getSimpleName());
@@ -39,5 +41,15 @@ class TestDeathNote {
             assertFalse(e.getMessage().isBlank());
             assertTrue(e.getMessage().length() >= ACCEPTABLE_MESSAGE_LENGTH);
         }
+    }
+
+    @Test
+    public void testInstructionsForNegativeIndex(){
+        testInstructionsOutOfRange(NEGATIVE_VALUE);
+    }
+
+    @Test
+    public void testInstructionsFoZeroIndex(){
+        testInstructionsOutOfRange(0);
     }
 }
