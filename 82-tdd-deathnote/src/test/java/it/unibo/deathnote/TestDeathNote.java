@@ -174,8 +174,9 @@ class TestDeathNote {
             assertTrue(deathNote.writeDetails(DEATH_DETAILS));
             assertEquals(DEATH_DETAILS, deathNote.getDeathDetails(HUMAN_NAME));
             deathNote.writeName(HUMAN_2_NAME);
+            deathNote.writeDeathCause(CAUSE_OF_DEATH);
              try {
-                Thread.sleep(SLEEP_MILIS);
+                Thread.sleep(SLEEP_2_MILIS);
                 assertFalse(deathNote.writeDetails(DEATH_DETAILS));
                 assertNull(deathNote.getDeathDetails(HUMAN_2_NAME));
             } catch (InterruptedException ie){
