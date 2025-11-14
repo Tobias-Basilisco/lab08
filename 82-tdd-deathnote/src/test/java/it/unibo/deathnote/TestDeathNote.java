@@ -3,6 +3,7 @@ package it.unibo.deathnote;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Assertions;
@@ -17,9 +18,11 @@ class TestDeathNote {
     private final int ACCEPTABLE_MESSAGE_LENGTH = 10;
     private final int NEGATIVE_VALUE = -5;
     private final long SLEEP_MILIS = 100;
+    private final long SLEEP_2_MILIS = 6100;
     private final String HUMAN_NAME = "Humanoid Johnson";
     private final String HUMAN_2_NAME = "Hum Anoid";
     private final String CAUSE_OF_DEATH = "karting accident";
+    private final String DEATH_DETAILS = "karting accident";
     private final String GET_RULE_EXCEPTION = "IllegalArgumentException";
     private final String WRITE_DEATH_CAUSE_EXCEPTION = "IllegalStateException";
     private DeathNote deathNote;
@@ -140,6 +143,44 @@ class TestDeathNote {
             } catch (InterruptedException ie){
                 System.out.println(ie.getMessage());
             }  
+        }  
+    }
+
+    /**
+     * check that writing the death details before writing a name throws the correct exception
+     * write the name of a human in the notebook
+     * verify that the details of the death are currently empty
+     * set the details of the death to "ran for too long"
+     * verify that death details have been set correctly (returned true, and the details are indeed "ran for too long")
+     * write the name of another human in the notebook
+     * sleep for 6100ms
+     * try to change the details
+     * verify that the details have not been changed
+    */
+    @Test
+    public void testDeathDetails(){
+        try {
+            deathNote.writeDetails(CAUSE_OF_DEATH);
+            Assertions.fail("Writing death details on an empty deathNote should throw an exception");
+        } catch (Exception e){
+            assertEquals(null, instruction);
+            assertEquals(WRITE_DEATH_CAUSE_EXCEPTION, e.getClass().getSimpleName());
+            assertNotNull(e.getMessage());
+            assertFalse(e.getMessage().isBlank());
+            assertTrue(e.getMessage().length() >= ACCEPTABLE_MESSAGE_LENGTH);
+            deathNote.writeName(HUMAN_NAME);
+            assertNull(deathNote.getDeathDetails(HUMAN_NAME));
+            deathNote.writeDeathCause(CAUSE_OF_DEATH);
+            assertTrue(deathNote.writeDetails(DEATH_DETAILS));
+            assertEquals(DEATH_DETAILS, deathNote.getDeathDetails(HUMAN_NAME));
+            deathNote.writeName(HUMAN_2_NAME);
+             try {
+                Thread.sleep(SLEEP_MILIS);
+                assertFalse(deathNote.writeDetails(DEATH_DETAILS));
+                assertNull(deathNote.getDeathDetails(HUMAN_2_NAME));
+            } catch (InterruptedException ie){
+                System.out.println(ie.getMessage());
+            }
         }
     }
 }
