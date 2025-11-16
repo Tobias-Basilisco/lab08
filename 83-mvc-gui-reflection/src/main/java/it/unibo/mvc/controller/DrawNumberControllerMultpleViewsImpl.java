@@ -28,6 +28,8 @@ public class DrawNumberControllerMultpleViewsImpl extends DrawNumberControllerIm
         if (views.isEmpty()){
             throw new NullPointerException("There is no view attached!");
         }
-        super.getModel().attempt(n);
+        for (final DrawNumberView view : views){
+            view.result(super.getModel().attempt(n));
+        }
     }
 }
