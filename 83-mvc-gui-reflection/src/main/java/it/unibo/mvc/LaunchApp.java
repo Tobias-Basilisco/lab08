@@ -4,6 +4,7 @@ import it.unibo.mvc.api.DrawNumberController;
 import it.unibo.mvc.controller.DrawNumberControllerImpl;
 import it.unibo.mvc.controller.DrawNumberControllerMultpleViewsImpl;
 import it.unibo.mvc.model.DrawNumberImpl;
+import it.unibo.mvc.view.DrawNumberStandardOutputView;
 import it.unibo.mvc.view.DrawNumberSwingView;
 
 /**
@@ -31,5 +32,6 @@ public final class LaunchApp {
         final DrawNumberController app = new DrawNumberControllerMultpleViewsImpl(model);
         app.addView(new DrawNumberSwingView());
         app.addView(new DrawNumberSwingView());
+        app.addView(new DrawNumberStandardOutputView());
     }
 }
