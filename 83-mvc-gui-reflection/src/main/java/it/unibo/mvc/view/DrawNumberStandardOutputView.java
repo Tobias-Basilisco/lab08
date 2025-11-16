@@ -6,6 +6,9 @@ import it.unibo.mvc.api.DrawResult;
 
 public class DrawNumberStandardOutputView implements DrawNumberView{
     
+    public DrawNumberStandardOutputView(){
+    }
+
     /**
      *{@inheritDoc}
      */
