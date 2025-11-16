@@ -30,5 +30,6 @@ public final class LaunchApp {
         // app.addView(new DrawNumberSwingView());
         final DrawNumberController app = new DrawNumberControllerMultpleViewsImpl(model);
         app.addView(new DrawNumberSwingView());
+        app.addView(new DrawNumberSwingView());
     }
 }
