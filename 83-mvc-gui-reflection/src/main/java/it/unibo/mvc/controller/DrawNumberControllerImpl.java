@@ -10,7 +10,7 @@ import java.util.Objects;
  * This class implements the game controller. It orchestrates the game, exposes methods to its observers
  * (the boundaries), and sends results to them.
  */
-public final class DrawNumberControllerImpl implements DrawNumberController {
+public class DrawNumberControllerImpl implements DrawNumberController {
 
     private final DrawNumber model;
     private DrawNumberView view;
@@ -54,6 +54,10 @@ public final class DrawNumberControllerImpl implements DrawNumberController {
          * until the last thread terminates.
          */
         System.exit(0);
+    }
+
+    public DrawNumber getModel() {
+        return model;
     }
 
 }
